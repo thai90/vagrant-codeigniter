@@ -4,7 +4,7 @@ class User_model extends CI_Model{
 	public function __construct ()
 	{
 		parent::__construct();
-		$connected = $this->load->database();
+		$this->load->database();
 	}
 
 	public function listAll()
@@ -20,7 +20,10 @@ class User_model extends CI_Model{
 
 	public function check_login($email,$password)
 	{
-		$query = $this->db->get_where('user',array('email'=>$email,'password'=>$password),1);
+		$this->db->from('user');
+		$this->db->where('email',$email);
+		$this->db->where('password',$password);
+		$query = $this->db->get();
 		$rowCount = $query->num_rows();
 		if ($rowCount == 1) 
 			foreach($query->result() as $row)

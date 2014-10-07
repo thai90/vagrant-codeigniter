@@ -2,6 +2,7 @@
  <head>
  </head>
  <body>
+    <?php if(isset($login_failed_mess)) echo $login_failed_mess;?>
    <?php echo form_open('user/login');?>
      <h5>Emailアドレス:</h5>
      <input type="text" size="20" id="email" name="email" value="<?php echo set_value('email');?>"/>

@@ -4,7 +4,7 @@ $config = array(
 					array(
 						'field'=>'username',
 						'label'=>'ユーザ名',
-						'rules'=>'trim|required|min_length[3]|max_length[12]|xss_clean'),
+						'rules'=>'trim|required|min_length[1]|max_length[12]|xss_clean'),
 					array(
 						'field'=>'password',
 						'label'=>'パスワード',
