@@ -1,9 +1,17 @@
 <?php
 	class Test extends CI_Controller
 	{
+
+		protected $layout = 'layout';
 		public function __construct(){
 			parent::__construct();
 			$this->load->database();
+		}
+
+		protected function render($content)
+		{
+			$view_data = array ('content' => $content);
+			$this->load->view($this->layout,$view_data);
 		}
 
 		function insertData()

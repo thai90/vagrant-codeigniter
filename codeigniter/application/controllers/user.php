@@ -47,7 +47,8 @@
 			$this->form_validation->set_error_delimiters('<p style="color:red">','</p>');
 			if($this->form_validation->run('login')==FALSE)
 			{
-				$this->load->view('user/loginForm');
+				$content = $this->load->view('user/loginForm',TRUE);
+				$this->load->view('user/beforeLogin_layout',array('content'=>$content));
 			}
 			else
 			{
@@ -67,7 +68,8 @@
 				else
 				{
 					$data['login_failed_mess'] = 'Emailアドレスかパスワードは間違ったんです';
-					$this->load->view('user/loginForm',$data);
+					$content=$this->load->view('user/loginForm',$data);
+					$this->load->view('user/beforeLogin_layout',array('content'=>$content));
 
 				}
 			}
@@ -83,8 +85,10 @@
 				if($this->input->post('page'))
 				{
 					$tweetArr = $this->Tweet_model->get_newTweets(TWEETS_PER_PAGE,$this->input->post('page')*TWEETS_PER_PAGE);
-					print_r ($tweetArr);
-					//echo 'hello';
+					foreach($tweetArr as $item)
+					{
+						echo '<li>'.$item['name'].'<br/>'.$item['post_time'].'<br/>'.$item['tweet'].'<br/><br/>';
+					}
 				}
 				else
 				{
@@ -92,11 +96,22 @@
 					$data['newTweets'] = $this->Tweet_model->get_newTweets(TWEETS_PER_PAGE,0);
 					$data['tweetNum'] = $this->Tweet_model->get_tweetNums();
 					$data['pageNum'] = ceil($data['tweetNum']/TWEETS_PER_PAGE);
-					$this->load->view('user/homepage',$data);
+					$data1['content'] = $this->load->view('user/homepage',$data,TRUE);
+					$this->load->view('user/layout',$data1);
 				}
 			}
 			else
 				redirect('user/login');
+		}
+
+		function updateNewTweet()
+		{
+			if($this->input->post('userID') && $this->input->post('newTweet'))
+			{
+				$this->load->model('Tweet_model');
+				$this->Tweet_model->updateNewTweet($this->input->post('userID'),
+					$this->input->post('newTweet'));
+			}
 		}
 
 		function logout()
