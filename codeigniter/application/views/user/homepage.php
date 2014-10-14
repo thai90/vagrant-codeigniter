@@ -2,14 +2,19 @@
 	$('document').ready(function(){
 		var track_list =1;
 		var pageNum = <?php echo $pageNum?>;
+
+		//ツイートの数は１０以下の場合、「もっと見る」ボタンは無効になる
 		if(track_list >= pageNum)
 			$('#loadMore').attr('disabled','disabled');
+
+		//最初、「投稿」ボタンが無効
 		$('#post').attr('disabled','disabled');
 
+		//ユーザが「もっと見る」ボタンをクリックすると実施するファンクション
 		$('#loadMore').click(function(){
 			$(this).hide();
 			$.ajax({
-				url : "<?php echo site_url('user/homepage'); ?>",
+				url : "<?php echo site_url('user/homepage');?>",
 				type: "POST",
 				data : {
 					page:track_list,
@@ -39,11 +44,13 @@
 		});
 
 
+		//ユーザがツイート記入ボックスに内容をクリックすると、実施するファンクション
 		$('#tweet_input').keyup(function(){
 			if($('#tweet_input').val().trim() == "") $('#post').attr('disabled','disabled');
 			else $('#post').removeAttr('disabled');
 		});
 
+		//ユーザが「投稿」ボタンを」クリックすると実施するファンクション
 		$('#post').click(function(){
 			var newTweet = $('#tweet_input').val();
 			$.ajax({
@@ -65,7 +72,7 @@
 				},
 				error: function (jqXHR, textStatus, errorThrown)
 				{
-					alert('サーバにエラーが発生したので、データロードできない');
+					console.log('サーバにエラーが発生したので、データロードできない');
 				}
 
 			}

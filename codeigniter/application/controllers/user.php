@@ -8,12 +8,14 @@
 			$this->load->helper('url');
 		}
 
+        //このファンクションはテストの目的のみです		
 		function test()
 		{
 			$this->load->helper('time');
 			echo convertTime('2014-08-28 10:27:00');
 		}
 
+		//登録機能
 		function register()
 		{
 			$this->load->model('User_model');
@@ -35,6 +37,7 @@
 			}
 		}
 
+		//ログイン機能
 		function login()
 		{
 			if($this->session->userdata('logged_in'))
@@ -53,9 +56,7 @@
 
 				$email = $this->input->post('email');
 				$password = $this->input->post('password');
-				echo 'before';
 				$userInfo = $this->User_model->check_login($email,$password);
-				echo 'after';
 				if($userInfo != null)
 				{
 					$data = array('email'=>$userInfo->email,'username'=>$userInfo->name,'userID'=>$userInfo->id);
