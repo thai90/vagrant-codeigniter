@@ -9,13 +9,18 @@
 
 		function get_newTweets ($limit = 0,$offset = 0)
 		{	
+			$this->load->helper('time');
 			$this->db->select('tweet.*, user.name, user.email');
 			$this->db->from('tweet');
 			$this->db->join('user','tweet.user_id = user.id');
 			$this->db->order_by('tweet.post_time','DESC');
 			$this->db->limit($limit,$offset);
 			$query = $this->db->get();
-			return $query->result_array();
+			$resultArr = $query->result_array();
+			$size = sizeof($resultArr);
+			for($i=0;$i<$size;$i++)
+				$resultArr[$i]['post_time']=convertTime($resultArr[$i]['post_time']);
+			return $resultArr;
 
 		}
 
@@ -26,8 +31,11 @@
 
 		function updateNewTweet($userID,$newTweet)
 		{
+			$this->load->helper('time');
 			$data=array('user_id'=>$userID,'tweet'=>$newTweet,'post_time'=>date('Y-m-d H:i:s'));
 			$this->db->insert('tweet',$data);
+			$data['post_time'] = convertTime($data['post_time']);
+			return $data;
 		}
 	}
 ?>

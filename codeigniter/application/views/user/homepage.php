@@ -1,8 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-	
-	<script>
+<script>
 	$('document').ready(function(){
 		var track_list =1;
 		var pageNum = <?php echo $pageNum?>;
@@ -21,7 +17,13 @@
 				},
 				success: function(data, textStatus, jqXHR)
 				{
-					$('#result').append(data);
+					responseObj = jQuery.parseJSON(data);
+					jQuery.each(responseObj,function(i,item){
+						$("#result").append('<div class="panel panel-info"><div class="panel-heading">'
+							+item.name+'<br/>'
+							+item.post_time+'</div><div class = "panel-body">'
+							+item.tweet+'</div></div>');
+					});
 					$('#loadMore').show();
 					$("html, body").animate({scrollTop: $("#loadMore").offset().top}, 500);                 
 					track_list++;
@@ -52,9 +54,14 @@
 					newTweet:newTweet,
 					<?php echo $this->security->get_csrf_token_name()?>:'<?php echo $this->security->get_csrf_hash()?>',	
 				},
-				success:function(){
+				success:function(data,textStatus,jqXHR){
 
-					$('#result').prepend('<li>'+newTweet+'</li>');
+					newTweetInfo = jQuery.parseJSON(data);
+
+					$('#result').prepend($('<div class="panel panel-info"><div class="panel-heading">'
+							+newTweetInfo.username+'<br/>'
+							+newTweetInfo.post_time+'</div><div class = "panel-body">'
+							+newTweetInfo.tweet+'</div></div>').fadeIn('slow'));
 				},
 				error: function (jqXHR, textStatus, errorThrown)
 				{
@@ -75,19 +82,21 @@
 	echo $userData['username'].'<br/>';
 	echo anchor('user/logout','ログアウト');
 	?>
-	<div>
-		<input id="tweet_input" type="text" maxlength = '140'/>
-		<button id="post">投稿</button>
-	</div>
-	<ul id = 'result'>
+	<div class="tweets_block">
+	<div class="inner_div">
+		<textarea id="tweet_input" class="form-control" rows="3" style="resize:none" maxlength="140"></textarea><br/>
+		<button id="post" class ="btn btn-success" style="width:20%">投稿</button><br/><hr/>
+	<div id='result'>
 		<?php 
 			foreach($newTweets as $item)
 					{
-						echo '<li>'.$item['name'].'<br/>'.$item['post_time'].'<br/>'.$item['tweet'].'<br/><br/>';
+						echo '<div class="panel panel-info"><div class="panel-heading">'
+							.$item['name'].'<br/>'
+							.$item['post_time'].'</div><div class = "panel-body">'
+							.$item['tweet'].'</div></div>';
 					}
 		?>
-	</ul>
-	<button id="loadMore">もっと見る</button>
-</body>
-</head>
-</html>
+	</div>
+	<button id="loadMore" class="btn btn-success" style="width:20%">もっと見る</button>
+</div>
+</div>

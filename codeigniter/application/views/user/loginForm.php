@@ -14,13 +14,14 @@
    </div>
      <?php echo form_error('password');?>
      <br/>
-     <button type="submit" class="btn btn-default">サブミット</button>
+     <button type="submit" class="btn btn-success">ログイン</button>
    </form>
  </div>
  <div style="text-align:center">
-   <?php echo '<button type="button" class="btn btn-warning" 
-   style="margin-left:auto;margin-right:auto;margin-top:30px;width: 230px;height:60px;font-size:20px"><b>'
-   .anchor('user/register','アカウント登録').'</b></button>';?> 
+  <?php echo form_open('user/register');?>
+   <input type="submit" class="btn btn-success" 
+   style="margin-left:auto;margin-right:auto;margin-top:30px;width: 230px;height:60px;font-size:20px" value="登録"/>
+   </form> 
  </div>
  </div>
 

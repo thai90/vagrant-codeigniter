@@ -15,7 +15,6 @@
 		}
 		.form_block{
 			width:450px;
-			height:300px;
 			background-color: white;
 			padding:20px;
 			border-radius: 10px;

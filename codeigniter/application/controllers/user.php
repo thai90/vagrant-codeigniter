@@ -10,11 +10,8 @@
 
 		function test()
 		{
-			if($this->input->post('name',TRUE) && $this->input->post('age',TRUE))
-			{
-				echo "Data return";
-			}
-			else $this->load->view('user/test');
+			$this->load->helper('time');
+			echo convertTime('2014-08-28 10:27:00');
 		}
 
 		function register()
@@ -25,7 +22,8 @@
 			$this->form_validation->set_error_delimiters('<p style="color:red">','</p>');
 			if($this->form_validation->run('signUp')==FALSE)
 			{
-				$this->load->view('user/registerForm');
+				$content = $this->load->view('user/registerForm',null,TRUE);
+				$this->load->view('user/beforeLogin_layout',array('content'=>$content));
 			}
 			else
 			{
@@ -47,7 +45,7 @@
 			$this->form_validation->set_error_delimiters('<p style="color:red">','</p>');
 			if($this->form_validation->run('login')==FALSE)
 			{
-				$content = $this->load->view('user/loginForm',TRUE);
+				$content = $this->load->view('user/loginForm',null,TRUE);
 				$this->load->view('user/beforeLogin_layout',array('content'=>$content));
 			}
 			else
@@ -82,13 +80,12 @@
 			if($this->session->userdata('logged_in'))
 			{
 				$this->load->model('Tweet_model');
+				$this->load->helper('time');
 				if($this->input->post('page'))
 				{
 					$tweetArr = $this->Tweet_model->get_newTweets(TWEETS_PER_PAGE,$this->input->post('page')*TWEETS_PER_PAGE);
-					foreach($tweetArr as $item)
-					{
-						echo '<li>'.$item['name'].'<br/>'.$item['post_time'].'<br/>'.$item['tweet'].'<br/><br/>';
-					}
+					$response = json_encode($tweetArr);
+					echo $response;
 				}
 				else
 				{
@@ -109,8 +106,12 @@
 			if($this->input->post('userID') && $this->input->post('newTweet'))
 			{
 				$this->load->model('Tweet_model');
-				$this->Tweet_model->updateNewTweet($this->input->post('userID'),
+				$newTweetInfo=$this->Tweet_model->updateNewTweet($this->input->post('userID'),
 					$this->input->post('newTweet'));
+				$currentUserInfo=$this->session->userdata('logged_in');
+				$newTweetInfo['username'] = $currentUserInfo['username'];
+				echo json_encode($newTweetInfo);
+
 			}
 		}
 
