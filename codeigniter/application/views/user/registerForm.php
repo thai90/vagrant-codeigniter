@@ -18,10 +18,8 @@
 		<?php echo form_error('email');?>
 		<br/><br/>
 		<input type="submit" class="btn btn-success" style="width:70px" xvalue="登録"/>
- 
+
 		<?php echo form_close()."<br/>";
 		echo anchor("user/login","ログイン戻る");?>
-
-
 	</div>
 </div>

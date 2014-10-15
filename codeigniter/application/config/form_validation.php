@@ -8,7 +8,7 @@ $config = array(
 					array(
 						'field'=>'password',
 						'label'=>'パスワード',
-						'rules'=>'required|min_length[6]|max_length[30]|matches[passcnf]|md5'),
+						'rules'=>'required|min_length[6]|max_length[30]|alpha_numeric|matches[passcnf]|md5'),
 					array(
 						'field'=>'passcnf',
 						'label'=>'パスワード確認',

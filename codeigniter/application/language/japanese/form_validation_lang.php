@@ -22,6 +22,7 @@ $lang['is_natural_no_zero']	= "%s 欄には、0より大きい整数以外は入
 $lang['decimal']			= "%s 欄は10進数しか入力できません。";
 $lang['less_than']			= "%s 欄は %s より小さい数しか入力できません。";
 $lang['greater_than']		= "%s 欄は %s より大きな数しか入力できません。";
+$lang['is_unique'] = "データベースにはそのEmailアドレスがありますのでほかのEmailアドレスで登録してください。";
 
 
 /* End of file form_validation_lang.php */
