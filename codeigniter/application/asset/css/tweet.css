@@ -1,13 +1,13 @@
     .tweets_block{
-            width:70%;
-            background-color: white;
-            padding-top:50px;
-            padding-bottom:50px;
-            margin-left:auto;
-            margin-right:auto;
-            border-radius: 10px;
-            margin-bottom:50px;
-        }
+        width:70%;
+        background-color: white;
+        padding-top:50px;
+        padding-bottom:50px;
+        margin-left:auto;
+        margin-right:auto;
+        border-radius: 10px;
+        margin-bottom:50px;
+    }
 
     .inner_div{
         width:80%;
@@ -21,10 +21,39 @@
         margin-right:auto;
         margin-top:120px;
     }
-    
+
     .form_block{
         width:450px;
         background-color: white;
         padding:20px;
         border-radius: 10px;
+    }
+
+    .div_menu{
+        background:#3c3c3c;
+        height:70px;
+        padding-top:10px;
+        padding-left:20px;
+        padding-right:10px;
+        color:white;
+        margin-bottom: 30px
+    }
+
+    .div_menu > ul
+    {
+        list-style:inside none;
+    }
+
+    .div_menu > ul > li
+    {
+        display: inline;
+        width: 100%;
+    }
+
+    #divider
+    {
+        position:relave;
+        border-left:1px solid white;
+        height: 60px;
+        margin-top: 0px;
     }

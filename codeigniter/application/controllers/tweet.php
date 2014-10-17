@@ -1,6 +1,5 @@
 <?php
     class Tweet extends CI_controller {
-        
         public function __construct()
         {
             parent::__construct();
@@ -22,7 +21,7 @@
                 $newTweetInfo['username'] = $currentUserInfo['username'];
                 echo json_encode($newTweetInfo);
             }
-        }   
+        }
 
         function loadNextPage()
         {
@@ -34,8 +33,6 @@
                 $tweetArr = $this->Tweet_model->get_newTweets($userData['userID'],TWEETS_PER_PAGE,$page*TWEETS_PER_PAGE);
                 echo json_encode($tweetArr);
             }
-        }                 
-
-
+        }
     }
 ?>

@@ -1,7 +1,7 @@
 <?php
 class Tweet_model extends CI_model
 {
-    	public function __construct()
+    public function __construct()
 	{
 		parent::__construct();
 		$this->load->database();
