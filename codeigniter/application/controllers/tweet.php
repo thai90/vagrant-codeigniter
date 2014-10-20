@@ -1,11 +1,11 @@
 <?php
-    class Tweet extends CI_controller {
-        public function __construct()
-        {
-            parent::__construct();
-            $this->load->library('session');
-            $this->load->model('Tweet_model');
-        }
+class Tweet extends CI_controller {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->library('session');
+        $this->load->model('Tweet_model');
+    }
 
         /*ユーザの新ツイートをデータベースに記入、
         そして記入成功の場合、タイミングプロセスしたその新ツイート
@@ -35,4 +35,4 @@
             }
         }
     }
-?>
+    ?>
