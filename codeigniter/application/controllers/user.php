@@ -8,28 +8,38 @@ class User extends CI_Controller
         $this->load->helper('url');
     }
 
+    function test(){
+        $this->load->driver('cache');
+        $this->cache->memcached->save('foo','bar',60);
+        $data = $this->cache->memcached->get('foo');
+        $n = new Memcached();
+        $n->addServer('localhost', 11211);
+        $n->set('int',99);
+        var_dump($n->get('int'));
+        var_dump($data);
+        echo "memcache done";
+    }
+
     //登録機能
     function register()
     {
         $this->load->model('User_model');
         $this->load->helper(array('form'));
         $this->load->library('form_validation');
-        $this->form_validation->set_error_delimiters('<p style="color:red">','</p>');
-        if($this->form_validation->run('signUp') == FALSE)
+        $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+        if($this->form_validation->run('signUp') == false)
         {
-            $content = $this->load->view('user/registerForm',null,TRUE);
-            $this->load->view('user/beforeLogin_layout',array('content' => $content));
+            $content = $this->load->view('user/registerForm', null, true);
+            $this->load->view('user/beforeLogin_layout', array('content' => $content));
             return;
         }
         $newRecord['name'] = $this->input->post('username');
         $newRecord['password'] = $this->input->post('password');
         $newRecord['email'] = $this->input->post('email');
         $newUser = $this->User_model->insert($newRecord);
-        if($newUser != FALSE)
+        if($newUser != false)
         {
-            $this->session->set_userdata(
-                'logged_in',
-                array('userID'=>$newUser->id,
+            $this->session->set_userdata('logged_in', array('userID'=>$newUser->id,
                     'username' => $newUser->name,
                     'email' => $user->email
                     )
@@ -48,9 +58,9 @@ class User extends CI_Controller
         $this->load->helper(array('form'));
         $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<p style="color:red">','</p>');
-        if($this->form_validation->run('login') == FALSE)
+        if($this->form_validation->run('login') ==  false)
         {
-            $content = $this->load->view('user/loginForm',null,TRUE);
+            $content = $this->load->view('user/loginForm',null,true);
             $this->load->view('user/beforeLogin_layout',array('content' => $content));
             return;
         }
@@ -64,7 +74,7 @@ class User extends CI_Controller
             $content = $this->load->view(
                 'user/loginForm',
                 array('email_wrong_mess' => 'Emailアドレスが間違ってしまいました',
-                    TRUE)
+                    true)
                 );
             $this->load->view('user/beforeLogin_layout',array('content' => $content));
             return;
@@ -75,7 +85,7 @@ class User extends CI_Controller
             $content = $this->load->view(
                 'user/loginForm',
                 array('password_wrong_mess' => 'パスワードが間違ってしまいました',
-                    TRUE)
+                    true)
                 );
             $this->load->view('user/beforeLogin_layout',array('content' => $content));
             return;
@@ -99,11 +109,11 @@ class User extends CI_Controller
             $this->load->model('Tweet_model');
             $this->load->helper('time');
             $data['userData'] = $userData;
-            $data['newTweets'] = $this->Tweet_model->get_newTweets($userData['userID'],TWEETS_PER_PAGE,0);
+            $data['newTweets'] = $this->Tweet_model->get_newTweets($userData['userID'], TWEETS_PER_PAGE, 0);
             $data['tweetNum'] = $this->Tweet_model->get_tweetNums($userData['userID']);
             $data['pageNum'] = ceil($data['tweetNum']/TWEETS_PER_PAGE);
-            $data1['content'] = $this->load->view('user/homepage',$data,TRUE);
-            $this->load->view('user/layout',$data1);
+            $data1['content'] = $this->load->view('user/homepage', $data, true);
+            $this->load->view('user/layout', $data1);
             return;
         }
         redirect('user/login');

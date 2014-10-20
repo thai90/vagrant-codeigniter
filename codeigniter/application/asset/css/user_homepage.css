@@ -1,0 +1,23 @@
+#tweet_input{
+    resize:none;
+    width:100%;
+    height:50px;
+}
+
+#tweet_empty_mess{
+    display:none;
+    float:right;
+}
+
+#post_button_area{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 22%;
+    height: 40px;
+}
+
+#post #loadMore{
+    width: 20%;
+}
+
