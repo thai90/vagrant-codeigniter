@@ -28,10 +28,10 @@ class User_model extends CI_Model{
 
     public function check_login($email,$password)
     {
-        $query1 = $this->db->get_where('user',array('email' => $email));
-        if($query1->num_rows() === 0) return 'wrongEmail';
-        $query2 = $this->db->get_where('user',array('email' => $email, 'password' => $password));
-        if($query2->num_rows() === 0) return 'wrongPassword';
+        $checkEmai_query = $this->db->get_where('user',array('email' => $email));
+        if($checkEmai_query->num_rows() === 0) return 'wrongEmail';
+        $checkPassword_query = $this->db->get_where('user',array('email' => $email, 'password' => $password));
+        if($checkPassword_query->num_rows() === 0) return 'wrongPassword';
         foreach($query2->result() as $row)
                 return $row;
         }

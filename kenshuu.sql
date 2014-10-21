@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.9
+-- version 4.2.10
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2014 年 10 月 14 日 17:01
+-- Generation Time: 2014 年 10 月 20 日 17:18
 -- サーバのバージョン： 5.5.40-log
--- PHP Version: 5.4.33
+-- PHP Version: 5.4.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `tweet` (
   `user_id` int(11) NOT NULL,
   `tweet` varchar(160) NOT NULL,
   `post_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=235 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=248 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `name` varchar(300) NOT NULL,
   `password` varchar(300) NOT NULL,
   `email` varchar(200) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables
@@ -70,12 +70,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `tweet`
 --
 ALTER TABLE `tweet`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=235;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=248;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- ダンプしたテーブルの制約
 --
