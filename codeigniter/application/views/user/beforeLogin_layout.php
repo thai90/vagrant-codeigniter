@@ -8,7 +8,7 @@
   <link href="<?php echo base_url('application/asset/css/user_loginRegister.css');?>?<?php echo date('l jS \of F Y h:i:s A');?>" rel="stylesheet">
   <title>Sample page</title>
 </head>
-<body background="<?php echo base_url('application/asset/image/background.png');?>" >
+<body background="<?php echo base_url('application/asset/image/background.png');?>">
   <div> </div>
   <div> <?php echo $content?></div>
   <div> </div>
