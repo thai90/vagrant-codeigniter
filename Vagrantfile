@@ -26,5 +26,6 @@ Vagrant::Config.run do |config|
           }
         }
       })
+    chef.add_recipe "memcached"
   end
 end

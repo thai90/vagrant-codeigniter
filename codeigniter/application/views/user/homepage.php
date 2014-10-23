@@ -25,7 +25,9 @@ $('document').ready(function(){
                 jQuery.each(data,function(i,item){
                     $("#result").append('<div class="panel panel-info"><div class="panel-heading">'
                         +item.name+'<br/>'
-                        +item.post_time+'</div><div class="panel-body">'
+                        +item.post_time+
+                        '<span name="delTwtButton" class="glyphicon glyphicon-remove-circle" style="float:right; color:#c0c0c0" tweetID="'+item.id+'"></span>'
+                        +'</div><div class="panel-body">'
                         +item.tweet+'</div></div>');
                 });
                 $('#loadMore').show();
@@ -67,7 +69,9 @@ $('document').ready(function(){
             success:function(data,textStatus,jqXHR){
                 $('#result').prepend($('<div class="panel panel-info"><div class="panel-heading">'
                    +data.username+'<br/>'
-                   +data.post_time+'</div><div class="panel-body">'
+                   +data.post_time+
+                   '<span name="delTwtButton" class="glyphicon glyphicon-remove-circle" style="float:right; color:#c0c0c0" tweetID="'+data.id+'"></span>'
+                   +'</div><div class="panel-body">'
                    +data.tweet+'</div></div>').fadeIn('slow'));
             },
             error: function (jqXHR, textStatus, errorThrown){
@@ -86,6 +90,39 @@ $('document').ready(function(){
     }).mouseleave(function(){
             $('#tweet_empty_mess').fadeOut(1000);
     });
+
+    $('body').on('mouseenter', 'span[name="delTwtButton"]',function(){
+        var target = $(event.target);
+        target.css({'color':'black'});
+        target.click(function(){
+            confObj = target.next();
+            confObj.show();
+            confObj.children('a[name="no"]').click(function(){
+                confObj.hide();
+            });
+            confObj.children('a[name="yes"]').click(function(){
+                $.ajax({
+                    url:'<?php echo site_url("tweet/deleteTweet");?>',
+                    type: 'POST',
+                    data: {
+                        tweetID: target.attr('tweetID'),
+                        <?php echo $this->security->get_csrf_token_name()?>:'<?php echo $this->security->get_csrf_hash()?>',
+                    },
+                    success: function(data, textStatus, jqXHR)
+                    {
+                        target.parent().parent().fadeOut('slow');
+                    },
+                    error: function (jqXHR, textStatus, errorThrown){
+                        console.log('ツイートは削除できません');
+                    }
+                });
+            });
+        });
+    });
+    $('body').on('mouseleave', 'span[name="delTwtButton"]', function(){
+        var target = $(event.target);
+        target.css({'color':'#c0c0c0'});
+    });
 });
 
 </script>
@@ -101,7 +138,13 @@ $('document').ready(function(){
     <div id='result'>
       <?php
       foreach($newTweets as $item){
-          echo '<div class="panel panel-info"><div class="panel-heading">'.$item['name'].'<br/>'.$item['post_time'].'</div><div class="panel-body">'.$item['tweet'].'</div></div>';
+          echo  '<div class="panel panel-info">'.
+                    '<div class="panel-heading">'.$item['name'].'<br/>'.$item['post_time'].
+                        '<span name="delTwtButton" class="glyphicon glyphicon-remove-circle" style="float:right; color:#c0c0c0" tweetID="'.$item['id'].'"></span>'.
+                        '<div class="alert alert-danger" name="twtDelConf" style="float:right;position:relative;margin-right:3px;margin-top:0px;display:none">このツイートを削除したいですか？<br/><a name="yes">はい</a>&nbsp|&nbsp<a name="no">いいえ</a></div>'.
+                    '</div>'.
+                    '<div class="panel-body">'.$item['tweet'].'</div>'.
+                '</div>';
       }
       ?>
     </div>

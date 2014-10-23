@@ -40,3 +40,5 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
 define('TWEETS_PER_PAGE',10);
+define('CACHE_TIME',60);
+define('CACHED_TWEETS_ID', 'cached_tweets_id');
