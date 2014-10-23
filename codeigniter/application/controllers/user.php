@@ -51,7 +51,7 @@ class User extends CI_Controller
         $newUser = $this->User_model->insert($newRecord);
         if($newUser != false){
             $this->session->set_userdata('logged_in', array(
-                    'userID'=>$newUser->id,
+                    'userID' => $newUser->id,
                     'username' => $newUser->name,
                     'email' => $user->email
                     ));
@@ -60,7 +60,7 @@ class User extends CI_Controller
         }
     }
 
-      //ログイン機能
+    //ログイン機能
     function login(){
         if($this->session->userdata('logged_in')){
             redirect('/user/homepage','refresh');

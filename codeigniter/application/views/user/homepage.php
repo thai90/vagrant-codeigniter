@@ -44,7 +44,7 @@ $('document').ready(function(){
         }
     });
 
-    //ユーザがツイート記入ボックスに内容をクリックすると、実施するファンクション
+    //ユーザがツイート記入ボックスに内容を記入しなくてをクリックすると、実施するファンクション
     $('#tweet_input').keyup(function(){
         if($('#tweet_input').val().trim() == ""){
             $('#post').attr('disabled','disabled');
@@ -91,6 +91,7 @@ $('document').ready(function(){
             $('#tweet_empty_mess').fadeOut(1000);
     });
 
+    //ツイート削除ファンクション
     $('body').on('mouseenter', 'span[name="delTwtButton"]',function(){
         var target = $(event.target);
         target.css({'color':'black'});

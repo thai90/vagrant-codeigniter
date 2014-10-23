@@ -31,8 +31,10 @@ class Tweet extends CI_controller {
         }
     }
 
+    /*ユーザは「もっと見る」ボタンをクリックして、
+    次のツイートをデータベースからロードして、
+    クライアントにロードしたツイートをリターン*/
     function loadNextPage(){
-        //ユーザに「もっと見る」ボタンをクリックされるかどうかチェック
         $page = $this->input->post('page');
         $this->load->helper('time');
         if($page){
