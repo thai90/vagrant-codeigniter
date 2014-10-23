@@ -23,7 +23,7 @@ class Tweet extends CI_controller {
             $this->cache->memcached->save(CACHED_TWEETS_ID, $tweets);
 
             $currentUserInfo = $this->session->userdata('logged_in');
-            $newTweetInfo['username'] = $currentUserInfo['username'];
+            $newTweetInfo['name'] = $currentUserInfo['username'];
             $newTweetInfo['post_time'] = convertTime($newTweetInfo['post_time']);
             $this->output
                     ->set_content_type('application/json')

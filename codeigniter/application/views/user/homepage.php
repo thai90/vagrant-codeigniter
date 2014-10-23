@@ -1,4 +1,18 @@
 <script>
+//ツイートのボックスをスタイルするファンクション
+function renderTweet(item)
+{
+    var render = '<div class="panel panel-info"><div class="panel-heading">'
+                    +item.name+'<br/>'
+                    +item.post_time+
+                    '<span name="delTwtButton" class="glyphicon glyphicon-remove-circle" style="float:right; color:#c0c0c0" tweetID="'+item.id+'"></span>'+
+                    '<div class="alert alert-danger tweetDelConfBox" name="twtDelConf" >このツイートを削除したいですか？<br/><a name="yes">はい</a>&nbsp|&nbsp<a name="no">いいえ</a></div>'
+                +'</div><div class="panel-body">'
+                +item.tweet+'</div></div>';
+    return render;
+
+}
+
 $('document').ready(function(){
     var track_list = 1;
     var pageNum = <?php echo $pageNum?>;
@@ -23,12 +37,7 @@ $('document').ready(function(){
             },
             success: function(data, textStatus, jqXHR){
                 jQuery.each(data,function(i,item){
-                    $("#result").append('<div class="panel panel-info"><div class="panel-heading">'
-                        +item.name+'<br/>'
-                        +item.post_time+
-                        '<span name="delTwtButton" class="glyphicon glyphicon-remove-circle" style="float:right; color:#c0c0c0" tweetID="'+item.id+'"></span>'
-                        +'</div><div class="panel-body">'
-                        +item.tweet+'</div></div>');
+                    $("#result").append(renderTweet(item));
                 });
                 $('#loadMore').show();
                 $("html, body").animate({scrollTop: $("#loadMore").offset().top}, 500);
@@ -67,12 +76,7 @@ $('document').ready(function(){
                 <?php echo $this->security->get_csrf_token_name()?>:'<?php echo $this->security->get_csrf_hash()?>',
             },
             success:function(data,textStatus,jqXHR){
-                $('#result').prepend($('<div class="panel panel-info"><div class="panel-heading">'
-                   +data.username+'<br/>'
-                   +data.post_time+
-                   '<span name="delTwtButton" class="glyphicon glyphicon-remove-circle" style="float:right; color:#c0c0c0" tweetID="'+data.id+'"></span>'
-                   +'</div><div class="panel-body">'
-                   +data.tweet+'</div></div>').fadeIn('slow'));
+                $('#result').prepend(renderTweet(data)).fadeIn('slow');
             },
             error: function (jqXHR, textStatus, errorThrown){
                 console.log('サーバにエラーが発生したので、データロードできない');
@@ -107,7 +111,7 @@ $('document').ready(function(){
                     type: 'POST',
                     data: {
                         tweetID: target.attr('tweetID'),
-                        <?php echo $this->security->get_csrf_token_name()?>:'<?php echo $this->security->get_csrf_hash()?>',
+                        <?php echo $this->security->get_csrf_token_name()?>: s'<?php echo $this->security->get_csrf_hash()?>',
                     },
                     success: function(data, textStatus, jqXHR)
                     {
@@ -140,11 +144,11 @@ $('document').ready(function(){
       <?php
       foreach($newTweets as $item){
           echo  '<div class="panel panel-info">'.
-                    '<div class="panel-heading">'.$item['name'].'<br/>'.$item['post_time'].
-                        '<span name="delTwtButton" class="glyphicon glyphicon-remove-circle" style="float:right; color:#c0c0c0" tweetID="'.$item['id'].'"></span>'.
-                        '<div class="alert alert-danger" name="twtDelConf" style="float:right;position:relative;margin-right:3px;margin-top:0px;display:none">このツイートを削除したいですか？<br/><a name="yes">はい</a>&nbsp|&nbsp<a name="no">いいえ</a></div>'.
-                    '</div>'.
-                    '<div class="panel-body">'.$item['tweet'].'</div>'.
+                  '<div class="panel-heading">'.$item['name'].'<br/>'.$item['post_time'].
+                    '<span name="delTwtButton" class="glyphicon glyphicon-remove-circle tweetDelButton"  tweetID="'.$item['id'].'"></span>'.
+                    '<div class="alert alert-danger tweetDelConfBox" name="twtDelConf" >このツイートを削除したいですか？<br/><a name="yes">はい</a>&nbsp|&nbsp<a name="no">いいえ</a></div>'.
+                '</div>'.
+                  '<div class="panel-body">'.$item['tweet'].'</div>'.
                 '</div>';
       }
       ?>
