@@ -1,31 +1,6 @@
 <?php
 class User extends CI_Controller
 {
-    private $obj;
-    public function __construct(){
-        parent::__construct();
-        $this->load->library('session');
-        $this->load->helper('url');
-    }
-
-    private function cacheFirstTweets($cachedID, $tweets, $liveTime){
-        $this->load->driver('cache');
-        return $this->cache->memcached->save($cachedID, $tweets, $liveTime);
-    }
-
-    private function getFirstTweets($cachedID, $userID, $tweetNum, $offset, $liveTime, $timeIndexName){
-        $this->load->driver('cache');
-        $this->load->helper('time');
-        $tweets = $this->cache->memcached->get($cachedID);
-        if($tweets){
-            return convertTimeArr($tweets, $timeIndexName);
-        }
-        $this->load->model('Tweet_model');
-        $tweets = $this->Tweet_model->get_newTweets($userID, $tweetNum, $offset);
-        $this->cacheFirstTweets($cachedID, $tweets, $liveTime);
-        return convertTimeArr($tweets, $timeIndexName);
-    }
-
     function test(){
        $this->load->helper('time');
        $data[0]['post_time'] = '2014-10-10 14:05:34';
@@ -101,11 +76,12 @@ class User extends CI_Controller
 
       //ユーザのログインしたあとのページ
     function homepage(){
+        $this->load->helper('time');
         $userData = $this->session->userdata('logged_in');
         if($userData){
             $this->load->model('Tweet_model');
             $data['userData'] = $userData;
-            $data['newTweets'] = $this->getFirstTweets(CACHED_TWEETS_ID, $userData['userID'], TWEETS_PER_PAGE, 0, CACHE_TIME, 'post_time');
+            $data['newTweets'] = convertTimeArr($this->Tweet_model->get_newTweets($userData['userID'], TWEETS_PER_PAGE, 0), 'post_time');
             $data['tweetNum'] = $this->Tweet_model->get_tweetNums($userData['userID']);
             $data['pageNum'] = ceil($data['tweetNum']/TWEETS_PER_PAGE);
             $renderData['content'] = $this->load->view('user/homepage', $data, true);

@@ -76,7 +76,7 @@ $('document').ready(function(){
                 <?php echo $this->security->get_csrf_token_name()?>:'<?php echo $this->security->get_csrf_hash()?>',
             },
             success:function(data,textStatus,jqXHR){
-                $('#result').prepend(renderTweet(data)).fadeIn('slow');
+                $('#result').prepend($(renderTweet(data)).fadeIn('slow'));
             },
             error: function (jqXHR, textStatus, errorThrown){
                 console.log('サーバにエラーが発生したので、データロードできない');
@@ -100,7 +100,7 @@ $('document').ready(function(){
         var target = $(event.target);
         target.css({'color':'black'});
         target.click(function(){
-            confObj = target.next();
+            var confObj = target.next();
             confObj.show();
             confObj.children('a[name="no"]').click(function(){
                 confObj.hide();
@@ -111,7 +111,7 @@ $('document').ready(function(){
                     type: 'POST',
                     data: {
                         tweetID: target.attr('tweetID'),
-                        <?php echo $this->security->get_csrf_token_name()?>: s'<?php echo $this->security->get_csrf_hash()?>',
+                        <?php echo $this->security->get_csrf_token_name()?>:'<?php echo $this->security->get_csrf_hash()?>',
                     },
                     success: function(data, textStatus, jqXHR)
                     {
@@ -129,7 +129,6 @@ $('document').ready(function(){
         target.css({'color':'#c0c0c0'});
     });
 });
-
 </script>
 <link href="<?php echo base_url('application/asset/css/user_homepage.css');?>?<?php echo date('l jS \of F Y h:i:s A');?>" rel="stylesheet">
 <div class="tweets_block">

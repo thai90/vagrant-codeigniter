@@ -16,12 +16,6 @@ class Tweet extends CI_controller {
             $this->load->driver('cache');
             $newTweetInfo = $this->Tweet_model->updateNewTweet($this->input->post('userID'),
                 $this->input->post('newTweet'));
-
-            //キャッシュ更新
-            $this->cache->memcached->delete(CACHED_TWEETS_ID);
-            $tweets = $this->Tweet_model->get_newTweets($this->input->post('userID'), TWEETS_PER_PAGE, 0);
-            $this->cache->memcached->save(CACHED_TWEETS_ID, $tweets);
-
             $currentUserInfo = $this->session->userdata('logged_in');
             $newTweetInfo['name'] = $currentUserInfo['username'];
             $newTweetInfo['post_time'] = convertTime($newTweetInfo['post_time']);
@@ -52,7 +46,6 @@ class Tweet extends CI_controller {
         $tweetID = $this->input->post('tweetID');
         if($tweetID){
             $this->load->model('Tweet_model');
-            $this->cache->memcached->delete(CACHED_TWEETS_ID);
             $this->output->set_output($this->Tweet_model->deleteTweet($tweetID));
         }
     }
