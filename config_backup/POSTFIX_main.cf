@@ -11,8 +11,8 @@ mail_owner              = postfix
 #
 #default_privs = nobody
 
-myhostname              = mail.<%= node.hostname %>.<%= node.domain %>
-mydomain                = <%= node.hostname %>.<%= node.domain %>
+myhostname              = mail.vagrant-centos-55.vagrantup.com 
+mydomain                = vagrant-centos-55.vagrantup.com 
 
 mydestination           = $myhostname, localhost
 unknown_local_recipient_reject_code = 550
@@ -62,7 +62,7 @@ smtpd_recipient_restrictions    = permit_sasl_authenticated,
                                   permit
 
 smtpd_sasl_security_options     = noanonymous
-smtpd_sasl_local_domain         =
+smtpd_sasl_local_domain         = 
 broken_sasl_auth_clients        = yes
 
 smtpd_helo_required             = yes

@@ -7,5 +7,7 @@ run_list(
   "postfix",
   "vagrant-codeigniter::db",
   "vagrant-codeigniter::web",
-  "vagrant-codeigniter::php"
+  "vagrant-codeigniter::php",
+  "mailx",
+  "crontab"
   )

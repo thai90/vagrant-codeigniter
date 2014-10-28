@@ -1,0 +1,3 @@
+2 : /user/login HTTP/1.1
+12 : /user/register HTTP/1.1
+0 : /user/homepage HTTP/1.1

@@ -1,6 +1,13 @@
 <?php
 class User extends CI_Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->library('session');
+        $this->load->helper('url');
+    }
+
     function test(){
        $this->load->helper('time');
        $data[0]['post_time'] = '2014-10-10 14:05:34';
