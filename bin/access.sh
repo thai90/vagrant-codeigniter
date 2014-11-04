@@ -19,23 +19,24 @@ function accessCount
 }
 
 logFilePath="/var/log/httpd/vagrant-codeigniter-access_log"
-loginPageUrl="/user/login HTTP/1.1"
-regPageUrl="/user/register HTTP/1.1"
-homePageUrl="/user/homepage HTTP/1.1"
+loginPageUrl="GET /user/login HTTP/1.1"
+regPageUrl="GET /user/register HTTP/1.1"
+homePageUrl="GET /user/homepage HTTP/1.1"
 
 #アクセス解析結果をアウトプットのフィアル
 outFile="/vagrant/bin/access_count.txt"
 
+#アクセス解析を実施、結果を取る
 accessLoginNum=$(accessCount "$logFilePath" "$loginPageUrl")
 accessRegNum=$(accessCount "$logFilePath" "$regPageUrl")
 accessHomepageNum=$(accessCount "$logFilePath" "$homePageUrl")
 
+#解析結果をファイルに記述
 cat > $outFile << _EOF_
 $accessLoginNum : $loginPageUrl
 $accessRegNum : $regPageUrl
 $accessHomepageNum : $homePageUrl
 _EOF_
-echo "hello"
 
 #アクセス解析の結果をユーザにメール送る
 mail -s "Daily access report" thai@realworld.jp < $outFile

@@ -6,7 +6,7 @@ class Tweet_model extends CI_model
         $this->load->database();
     }
 
-    private function isTweetInCache($tweetID)
+    public function isTweetInCache($tweetID)
     {
         $this->load->driver('cache');
         $cachedTweets = $this->cache->memcached->get(CACHED_TWEETS_ID);

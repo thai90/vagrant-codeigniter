@@ -1,0 +1,28 @@
+# vagrant-codeigniter twitter access analysis
+
+#access log file
+log_path='/var/log/httpd/vagrant-codeigniter-access_log'
+
+#analysis output
+output='/vagrant/output'
+
+#log time
+yesterday=`date -d 'yesterday' '+%d/%b/%Y'`
+today=`date '+%d/%b/%Y'`
+twodayago=`date -d '2 days ago' '+%d/%b/%Y'`
+
+#regular expression, match main access pages
+main_pages='/index.php/login\|/index.php/user\|/index.php/signup'
+
+#analyze access log
+sudo awk '{print $s4,$s6,$s7}' $log_path | grep $yesterday | grep 'GET' | awk '{print $7}' | sort |uniq -c | sort -rn | grep $main_pages > $output
+
+#mail subject & target address
+subject="[$yesterday][vagrant-codeigniter]"
+target='anh@realworld.jp'
+
+#send mail
+mail -s $subject $target << MAIL
+$yesterday のアクセス解析
+`cat $output`
+MAIL
